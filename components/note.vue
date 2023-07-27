@@ -28,7 +28,6 @@ const deleteNote = async () => {
       >
         {{ title }}
       </h5>
-
       <p class="mt-2 font-normal text-gray-700 dark:text-gray-400 break-words">
         {{ body }}
       </p>
