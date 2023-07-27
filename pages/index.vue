@@ -10,7 +10,7 @@ const { data: notes } = await useFetch('/api/notes')
       My awesome notes
     </h1>
     <NewNote />
-    <div class="mt-10 grid grid-cols-6 gap-4">
+    <div class="mt-10 grid grid-cols-4 gap-4">
       <Note
         v-for="note in notes"
         :title="note.title"
