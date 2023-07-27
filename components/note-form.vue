@@ -1,27 +1,27 @@
 <script setup lang="ts">
+defineEmits(['submit'])
+
 const title = ref('')
 const content = ref('')
-const router = useRouter()
-const isLoading = ref(false)
+const props = defineProps({
+  isLoading: Boolean,
+  defaultData: Object,
+  buttonText: {
+    type: String,
+    default: 'Add',
+  },
+})
 
-const addNote = async () => {
-  isLoading.value = true
-  const { pending } = await useFetch('/api/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: {
-      title: title.value,
-      content: content.value,
-    },
-  })
-  router.go(0)
-}
+onMounted(() => {
+  if (props.defaultData) {
+    title.value = props.defaultData.title
+    content.value = props.defaultData.content
+  }
+})
 </script>
 
 <template>
-  <form class="max-w-md mt-10">
+  <form>
     <div>
       <label
         for="first_name"
@@ -50,7 +50,7 @@ const addNote = async () => {
     </div>
     <button
       :disabled="isLoading"
-      @click.prevent="addNote"
+      @click.prevent="$emit('submit', { title, content })"
       type="button"
       class="w-32 mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
     >
