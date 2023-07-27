@@ -22,23 +22,7 @@ const addNote = async () => {
 
 <template>
   <form class="max-w-md mt-10">
-    <div v-if="isLoading" class="h-56 flex items-center">
-      <svg
-        class="w-12 mx-auto animate-spin"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-          opacity=".25"
-        />
-        <path
-          fill="blue"
-          d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
-        />
-      </svg>
-    </div>
-    <div v-else>
+    <div>
       <label
         for="first_name"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -68,9 +52,10 @@ const addNote = async () => {
       :disabled="isLoading"
       @click.prevent="addNote"
       type="button"
-      class="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      class="w-32 mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
     >
-      Add
+      <spinner v-if="isLoading" class="mx-auto h-5 text-white" />
+      <span v-else> Add </span>
     </button>
   </form>
 </template>

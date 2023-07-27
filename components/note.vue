@@ -6,9 +6,10 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const isLoading = ref(false)
 
 const deleteNote = async () => {
-  console.log('delete', props.id)
+  isLoading.value = true
   await useFetch(`/api/notes/${props.id}`, {
     method: 'DELETE',
   })
@@ -33,7 +34,9 @@ const deleteNote = async () => {
       </p>
     </div>
     <div class="mt-4">
+      <spinner v-if="isLoading" class="h-8 text-red-500" />
       <button
+        v-else
         @click.prevent="deleteNote"
         class="text-red-500 bg-transparent rounded-full p-2 hover:bg-red-50"
       >
