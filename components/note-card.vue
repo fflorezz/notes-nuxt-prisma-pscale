@@ -1,20 +1,13 @@
 <script setup lang="ts">
 const props = defineProps({
-  title: String,
-  body: String,
-  id: Number,
+  note: {
+    type: Object,
+    required: true,
+  },
 })
-
-const router = useRouter()
-const isLoading = ref(false)
-
-const deleteNote = async () => {
-  isLoading.value = true
-  await useFetch(`/api/notes/${props.id}`, {
-    method: 'DELETE',
-  })
-  router.go(0)
-}
+const { title, content, id } = props.note
+const { editNote } = useEditNote()
+const { loading, deleteNote } = useDeleteNote()
 </script>
 <template>
   <NuxtLink
@@ -29,20 +22,20 @@ const deleteNote = async () => {
         {{ title }}
       </h5>
       <p class="mt-2 font-normal text-gray-700 dark:text-gray-400 break-words">
-        {{ body }}
+        {{ content }}
       </p>
     </div>
     <div class="mt-4 flex">
       <button
-        @click.prevent="deleteNote"
-        class="text-red-500 bg-transparent rounded-full p-2 hover:bg-red-50"
-        :class="isLoading ? 'cursor-default  hover:bg-transparent' : ''"
+        @click.prevent="deleteNote(id)"
+        class="text-red-500 bg-transparent rounded-full p-2 hover:bg-red-50 flex-shrink-0"
+        :class="loading ? 'cursor-default  hover:bg-transparent' : ''"
       >
-        <spinner v-if="isLoading" class="h-5 text-red-500" />
+        <spinner v-if="loading" class="h-5 text-red-500" />
         <DeleteIcon v-else class="w-5 h-5" />
       </button>
       <button
-        @click="isEditing = true"
+        @click.prevent="editNote(note)"
         class="text-gray-400 bg-transparent rounded-full p-2 hover:bg-gray-50"
       >
         <edit-icon class="w-5 h-5" />

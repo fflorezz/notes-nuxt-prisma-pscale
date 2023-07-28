@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const { data: notes } = await useFetch('/api/notes')
-const router = useRouter()
 const isLoading = ref(false)
 const isModalOpen = useState('isModalOpen', () => false)
 
@@ -37,7 +35,9 @@ const addNote = async ({ title, content }) => {
   <nav
     class="fixed left-0 right-0 top-0 h-16 border-b bg-white border-gray-200 dark:bg-gray-900"
   >
-    <div class="flex flex-wrap items-center justify-between mx-auto p-4">
+    <div
+      class="flex flex-wrap items-center justify-between mx-auto py-4 pr-6 pl-5"
+    >
       <NuxtLink to="/" class="flex items-center">
         <logo-icon class="w-8 h-8 mr-3 text-blue-700" />
         <span

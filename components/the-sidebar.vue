@@ -1,10 +1,10 @@
 <template>
   <aside
     id="default-sidebar"
-    class="border-r fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+    class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
   >
-    <div class="h-full px-3 py-6 overflow-y-auto dark:bg-gray-800">
+    <div class="h-full px-4 py-6 bg-gray-50 overflow-y-auto dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
         <li>
           <NuxtLink
