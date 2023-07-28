@@ -1,26 +1,11 @@
 <script setup lang="ts">
-const isLoading = ref(false)
+const { note, onSuccess, loading, addNote } = useAddNote()
 const isModalOpen = useState('isModalOpen', () => false)
 
-const addNote = async ({ title, content }) => {
-  if (isLoading.value) return
-
-  isLoading.value = true
-
-  const { data: note } = await useFetch('/api/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: {
-      title: title,
-      content: content,
-    },
-  })
-
+onSuccess(async () => {
   isModalOpen.value = false
   await navigateTo(`/notes/${note.value?.id}`)
-}
+})
 </script>
 
 <template>
@@ -28,7 +13,7 @@ const addNote = async ({ title, content }) => {
     <NoteForm
       @submit="addNote"
       @close="isModalOpen = false"
-      :isLoading="isLoading"
+      :isLoading="loading"
       class="bg-white rounded p-10"
     />
   </Modal>
