@@ -1,10 +1,9 @@
 <script setup lang="ts">
-const { note, onSuccess, loading, addNote } = useAddNote()
+const { onSuccess, loading, addNote } = useNoteApi()
 const isModalOpen = useState('isModalOpen', () => false)
 
 onSuccess(async () => {
   isModalOpen.value = false
-  await navigateTo(`/notes/${note.value?.id}`)
 })
 </script>
 

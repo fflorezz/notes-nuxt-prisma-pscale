@@ -1,37 +1,22 @@
 <script setup lang="ts">
-const props = defineProps({
-  note: Object,
-})
-const isLoading = ref(false)
 const router = useRouter()
-const editModal = useEditModal()
-const stateNote = useNote()
+const isEditOpen = useState('isEditOpen')
+const oldNote = useState('note')
 
-const editNote = async ({ title, content }) => {
-  if (isLoading.value) return
+const { editNote, loading, onSuccess } = useNoteApi()
 
-  isLoading.value = true
-
-  await useFetch(`/api/notes/${stateNote.value.id}`, {
-    method: 'PUT',
-    body: {
-      title: title,
-      content: content,
-    },
-  })
-
-  editModal.value = false
-  router.go(0)
-}
+onSuccess(async () => {
+  isEditOpen.value = false
+})
 </script>
 <template>
-  <Modal v-if="editModal" @close="editModal = false">
+  <Modal v-if="isEditOpen" @close="isEditOpen = false">
     <NoteForm
-      @submit="editNote"
-      @close="editModal = false"
-      :isLoading="isLoading"
+      @submit="newNote => editNote({ ...newNote, id: oldNote.id })"
+      @close="isEditOpen = false"
+      :isLoading="loading"
       class="bg-white rounded p-10"
-      :defaultData="stateNote"
+      :defaultData="oldNote"
       :buttonText="'Save'"
     />
   </Modal>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const { data: notes } = await useFetch('/api/notes')
-const router = useRouter()
-const isLoading = ref(false)
-const isModalOpen = ref(false)
+const { data: notes } = await useFetch('/api/notes', {
+  key: 'notes',
+})
 </script>
 
 <template>
