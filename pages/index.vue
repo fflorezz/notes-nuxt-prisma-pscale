@@ -5,7 +5,7 @@ const { data: notes } = await useFetch('/api/notes', {
 </script>
 
 <template>
-  <div class="grid grid-cols-4 gap-4">
+  <NoteGrid>
     <NoteCard v-for="note in notes" :note="note" :key="note.id" />
-  </div>
+  </NoteGrid>
 </template>
