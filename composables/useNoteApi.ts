@@ -90,13 +90,10 @@ export default (): Api => {
     loading.value = true
 
     try {
-      const { data } = await useFetch(url, options)
+      const { data, error } = await useFetch(url, options)
 
-      if (!data.value) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Not found',
-        })
+      if (error.value) {
+        throw error.value
       }
 
       result.value = data.value
