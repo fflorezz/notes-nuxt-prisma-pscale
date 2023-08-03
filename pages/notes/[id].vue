@@ -4,6 +4,14 @@ const { data: note } = await useFetch(`/api/notes/${noteId}`, {
   key: 'note',
 })
 const { editNote } = useEditModal()
+
+const title = computed(() =>
+  note.value?.title ? `Notes - ${note.value.title}` : 'Notes'
+)
+
+useHead({
+  title,
+})
 </script>
 <template>
   <div class="flex items-start justify-between">

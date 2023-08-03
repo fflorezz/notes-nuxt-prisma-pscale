@@ -2,6 +2,10 @@
 const { data: notes } = await useFetch('/api/notes', {
   key: 'notes',
 })
+
+useHead({
+  title: 'Notes',
+})
 </script>
 
 <template>
