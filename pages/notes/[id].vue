@@ -1,9 +1,16 @@
 <script setup lang="ts">
 const noteId = useRoute().params.id
+const { editNote } = useEditModal()
 const { data: note } = await useFetch(`/api/notes/${noteId}`, {
   key: 'note',
 })
-const { editNote } = useEditModal()
+
+if (!note.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Note not found',
+  })
+}
 
 const title = computed(() =>
   note.value?.title ? `Notes - ${note.value.title}` : 'Notes'
@@ -16,7 +23,7 @@ useHead({
 <template>
   <div class="flex items-start justify-between">
     <h2 class="text-4xl font-bold dark:text-white break-words">
-      {{ note.title }}
+      {{ note?.title }}
     </h2>
     <button
       @click="editNote(note)"
@@ -25,5 +32,5 @@ useHead({
       <edit-icon class="w-6 h-6" />
     </button>
   </div>
-  <p class="mt-6 break-words">{{ note.content }}</p>
+  <p class="mt-6 break-words">{{ note?.content }}</p>
 </template>
